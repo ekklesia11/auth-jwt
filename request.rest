@@ -1,0 +1,16 @@
+GET http://localhost:3000
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "qwe123"
+}
+
+###
+
+GET http://localhost:3000/secret
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1NzQ1MTQ1MjgsImV4cCI6MTU3NDUxNDU1OH0.fHaOM6dbR6vTcvKvtVC2tQq9nlAbeYkSgBmkcZQPhBM
