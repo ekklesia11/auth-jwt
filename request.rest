@@ -14,3 +14,8 @@ Content-Type: application/json
 
 GET http://localhost:3000/secret
 Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1NzQ1MTQ1MjgsImV4cCI6MTU3NDUxNDU1OH0.fHaOM6dbR6vTcvKvtVC2tQq9nlAbeYkSgBmkcZQPhBM
+
+###
+
+GET http://localhost:3000/token
+Authorization: refreshToken eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.dPbJPpGiRYSuUcCfnre8lmWb38pDl5xrEhp08Mgzq-A

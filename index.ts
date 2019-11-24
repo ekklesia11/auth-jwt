@@ -18,13 +18,11 @@ const isAuthorized = (req: Request, res: Response, next: NextFunction): any => {
   if (typeof req.headers.authorization !== "undefined") {
     const token: string = req.headers.authorization.split(" ")[1];
     const secret: string = process.env.privateKey;
-    const refresh: string = process.env.refreshKey;
 
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        return res.send("token expired");
+        return res.status(403).json({ error: "token expired" });
       }
-      console.log("decoded", decoded);
       return next();
     });
   } else {
@@ -66,6 +64,28 @@ app.post("/login", (req: Request, res: Response) => {
   } else {
     res.status(403).json({ error: "email or password is wrong" });
   }
+});
+
+app.get("/token", (req: Request, res: Response) => {
+  // post refresh token to get a new access token
+  if (typeof req.headers.authorization !== "undefined") {
+    const refreshToken: string = req.headers.authorization.split(" ")[1];
+    const refresh: string = process.env.refreshKey;
+    jwt.verify(refreshToken, refresh, (err, decoded: string) => {
+      if (err) {
+        return res.status(400).json({ error: "Refresh Token is invalid" });
+      }
+      const accessToken: string = generateToken({ email: decoded });
+      return res.status(200).send(accessToken);
+    });
+  } else {
+    return res.status(500).json({ error: "Invalid Token" });
+  }
+});
+
+app.delete("/logout", (req: Request, res: Response) => {
+  userTable.refreshToken = null;
+  return res.status(200).send("Logged out");
 });
 
 app.listen(3000, () => {
